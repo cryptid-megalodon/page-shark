@@ -75,7 +75,8 @@ function createSidebar() {
         margin-bottom: 20px;
       }
     </style>
-    <div id="summarized-content"></div>
+    <h1>Summary</h1>
+    <div id="summarized-content">Processing...</div>
     <input type="text" id="question-input" placeholder="Ask a question">
     <button id="ask-button">Ask</button>
   `;
