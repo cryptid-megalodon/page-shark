@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
-  "name": "AI21 Article Summarizer and QA",
+  "name": "Article Summarizer and QA",
   "version": "1.0",
-  "description": "Summarizes webpage content and provides a Q&A interface using AI21 API.",
+  "description": "Summarizes webpage content and provides a Q&A interface.",
   "permissions": [
     "activeTab",
     "storage",

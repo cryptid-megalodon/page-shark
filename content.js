@@ -1,4 +1,4 @@
-// Function to summarize text
+// Summarizes the text and returns the text summary.
 async function summarizeText(apiKey, text) {
   const response = await fetch("https://api.ai21.com/studio/v1/summarize", {
     method: "POST",
@@ -16,7 +16,7 @@ async function summarizeText(apiKey, text) {
   return data.summary;
 }
 
-// Function to segment text
+// Segments the text and returns an array of text segments.
 async function segmentText(apiKey, text) {
   const response = await fetch("https://api.ai21.com/studio/v1/segmentation", {
     method: "POST",
@@ -34,7 +34,7 @@ async function segmentText(apiKey, text) {
   return data.segments;
 }
 
-// Function to answer questions
+// Answers questions based on a given context and returns the answer.
 async function answerQuestion(apiKey, context, question) {
   const response = await fetch("https://api.ai21.com/studio/v1/experimental/answer", {
     method: "POST",
@@ -52,6 +52,36 @@ async function answerQuestion(apiKey, context, question) {
   return data.answer;
 }
 
+// Updates the DOM with the extension's sidebar UI.
+function createSidebar() {
+  const sidebar = document.createElement('div');
+  sidebar.id = 'ai21-sidebar';
+  sidebar.innerHTML = `
+    <style>
+      #ai21-sidebar {
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 300px;
+        height: 100%;
+        z-index: 9999;
+        background-color: #f9f9f9;
+        border-left: 1px solid #ccc;
+        overflow-y: auto;
+        padding: 20px;
+        box-sizing: border-box;
+      }
+      #summarized-content {
+        margin-bottom: 20px;
+      }
+    </style>
+    <div id="summarized-content"></div>
+    <input type="text" id="question-input" placeholder="Ask a question">
+    <button id="ask-button">Ask</button>
+  `;
+  document.body.appendChild(sidebar);
+}
+
 async function processArticle(apiKey) {
   const documentClone = document.cloneNode(true);
   const article = new Readability(documentClone).parse();
@@ -60,30 +90,17 @@ async function processArticle(apiKey) {
     return;
   }
 
-  const segments = await segmentText(apiKey, article.content);
-  let summarizedContent = "";
+  createSidebar();
 
-  for (const segment of segments) {
-    const summary = await summarizeText(apiKey, segment);
-    summarizedContent += `<p>${summary}</p>`;
-  }
+  const summary = await summarizeText(apiKey, article.textContent);
 
-  const summaryDiv = document.createElement("div");
-  summaryDiv.innerHTML = summarizedContent;
-  summaryDiv.id = "summarized-content";
-  document.body.appendChild(summaryDiv);
+  const summaryDiv = document.getElementById("summarized-content");
+  summaryDiv.innerHTML = summary;
 
   // Add an input field and a button to ask questions
-  const questionInput = document.createElement("input");
-  questionInput.type = "text";
-  questionInput.id = "question-input";
-  questionInput.placeholder = "Ask a question";
-  document.body.appendChild(questionInput);
+  const questionInput = document.getElementById("question-input");
 
-  const askButton = document.createElement("button");
-  askButton.id = "ask-button";
-  askButton.innerHTML = "Ask";
-  document.body.appendChild(askButton);
+  const askButton = document.getElementById("ask-button");
 
   askButton.addEventListener("click", async () => {
     const question = questionInput.value;
