@@ -20,3 +20,13 @@ button {
   margin: 4px 2px;
   cursor: pointer;
 }
+
+.question {
+  margin-bottom: 0;  // Remove space below the question
+  margin-block-end: 0;  // Override the User Agent Stylesheet
+}
+
+.answer {
+  margin-top: 0;  // Remove space above the answer
+  margin-block-start: 0;  // Override the User Agent Stylesheet
+}

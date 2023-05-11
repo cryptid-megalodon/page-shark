@@ -76,7 +76,7 @@ function createSidebar() {
       }
     </style>
     <h1>Summary</h1>
-    <div id="summarized-content">Processing...</div>
+    <div id="summarized-content">Loading...</div>
     <h1>Q&A</h1>
     <input type="text" id="question-input" placeholder="Ask a question">
     <button id="ask-button">Ask</button>
@@ -95,10 +95,7 @@ async function processArticle(apiKey) {
 
   createSidebar();
 
-  const summary = await summarizeText(apiKey, article.textContent);
-
   const summaryDiv = document.getElementById("summarized-content");
-  summaryDiv.innerHTML = summary;
 
   const askButton = document.getElementById("ask-button");
   askButton.addEventListener("click", async () => {
@@ -112,20 +109,27 @@ async function processArticle(apiKey) {
 
     // Add the question to the div
     const questionElement = document.createElement("p");
-    questionElement.innerHTML = `Q: ${question}`;
+    questionElement.classList.add('question');
+    questionElement.innerHTML = `<b>Q:</b> ${question}`;
     qaDiv.appendChild(questionElement);
 
     // Add a temporary answer to the div
     const answerElement = document.createElement("p");
-    answerElement.innerHTML = "A: processing...";
+    answerElement.classList.add('answer');
+    answerElement.innerHTML = "<b>A:</b> loading...";
     qaDiv.appendChild(answerElement);
 
     // Append the div to the container
     qaSection.appendChild(qaDiv);
 
-    // Fetch the answer and update the answer element
+    // Fetch the anprocessArticleswer and update the answer element
     const answer = await answerQuestion(apiKey, article.content, question);
-    answerElement.innerHTML = `A: ${answer}`;
+    answerElement.innerHTML = `<b>A:</b> ${answer}`;
+  });
+
+  // Request the summary asynchronously
+  summarizeText(apiKey, article.textContent).then(summary => {
+    summaryDiv.innerHTML = summary;
   });
 }
 
