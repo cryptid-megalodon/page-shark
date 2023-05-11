@@ -77,8 +77,10 @@ function createSidebar() {
     </style>
     <h1>Summary</h1>
     <div id="summarized-content">Processing...</div>
+    <h1>Q&A</h1>
     <input type="text" id="question-input" placeholder="Ask a question">
     <button id="ask-button">Ask</button>
+    <div id="qa-section"></div>
   `;
   document.body.appendChild(sidebar);
 }
@@ -98,15 +100,32 @@ async function processArticle(apiKey) {
   const summaryDiv = document.getElementById("summarized-content");
   summaryDiv.innerHTML = summary;
 
-  // Add an input field and a button to ask questions
-  const questionInput = document.getElementById("question-input");
-
   const askButton = document.getElementById("ask-button");
-
   askButton.addEventListener("click", async () => {
+    const questionInput = document.getElementById("question-input");
     const question = questionInput.value;
+
+    // Create a container for questions and answers
+    const qaSection = document.getElementById("qa-section");
+    const qaDiv = document.createElement("div");
+    qaDiv.id = "qa-div";
+
+    // Add the question to the div
+    const questionElement = document.createElement("p");
+    questionElement.innerHTML = `Q: ${question}`;
+    qaDiv.appendChild(questionElement);
+
+    // Add a temporary answer to the div
+    const answerElement = document.createElement("p");
+    answerElement.innerHTML = "A: processing...";
+    qaDiv.appendChild(answerElement);
+
+    // Append the div to the container
+    qaSection.appendChild(qaDiv);
+
+    // Fetch the answer and update the answer element
     const answer = await answerQuestion(apiKey, article.content, question);
-    alert(`Answer: ${answer}`);
+    answerElement.innerHTML = `A: ${answer}`;
   });
 }
 
