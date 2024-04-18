@@ -55,26 +55,8 @@ async function answerQuestion(apiKey, context, question) {
 // Updates the DOM with the extension's sidebar UI.
 function createSidebar() {
   const sidebar = document.createElement('div');
-  sidebar.id = 'ai21-sidebar';
+  sidebar.id = 'pageshark-sidebar';
   sidebar.innerHTML = `
-    <style>
-      #ai21-sidebar {
-        position: fixed;
-        top: 0;
-        right: 0;
-        width: 300px;
-        height: 100%;
-        z-index: 9999;
-        background-color: #f9f9f9;
-        border-left: 1px solid #ccc;
-        overflow-y: auto;
-        padding: 20px;
-        box-sizing: border-box;
-      }
-      #summarized-content {
-        margin-bottom: 20px;
-      }
-    </style>
     <h1>Summary</h1>
     <div id="summarized-content">Loading...</div>
     <h1>Q&A</h1>

@@ -1,14 +1,29 @@
-body {
+
+#pageshark-sidebar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 299px;
+  height: 99%;
+  z-index: 9998;
+  background-color: #f8f9f9;
+  border-left: 0px solid #ccc;
+  overflow-y: auto;
+  padding: 19px;
+  box-sizing: border-box;
+}
+
+#pageshark-sidebar body {
   font-family: Arial, sans-serif;
   margin: 16px;
 }
 
-h1 {
+#pageshark-sidebar h1 {
   font-size: 20px;
   margin-bottom: 16px;
 }
 
-button {
+#pageshark-sidebar button {
   background-color: #4CAF50;
   border: none;
   color: white;
@@ -21,12 +36,17 @@ button {
   cursor: pointer;
 }
 
-.question {
-  margin-bottom: 0;  // Remove space below the question
-  margin-block-end: 0;  // Override the User Agent Stylesheet
+
+#pageshark-sidebar #summarized-content {
+  margin-bottom: 19px;
 }
 
-.answer {
-  margin-top: 0;  // Remove space above the answer
-  margin-block-start: 0;  // Override the User Agent Stylesheet
+#pageshark-sidebar .question {
+  margin-bottom: 0;
+  margin-block-end: 0;
+}
+
+#pageshark-sidebar .answer {
+  margin-top: 0;
+  margin-block-start: 0;
 }
